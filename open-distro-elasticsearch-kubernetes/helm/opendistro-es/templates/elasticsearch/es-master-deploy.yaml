@@ -68,7 +68,7 @@ spec:
         - name: NODE_DATA
           value: "false"
         - name: NETWORK_HOST
-          value: "0.0.0.0"
+          value: "_eth0_"
         - name: HTTP_ENABLE
           value: "true"
     {{- if .Values.elasticsearch.transportKeyPassphrase.enabled}}
@@ -83,7 +83,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: discovery.zen.ping.unicast.hosts
+        - name: DISCOVERY_SERVICE
           value: {{ template "opendistro-es.fullname" . }}-discovery
         - name: KUBERNETES_NAMESPACE
           valueFrom:
@@ -212,7 +212,7 @@ spec:
           secretName: {{ .Values.elasticsearch.ssl.admin.existingCertSecret }}
       {{- end }}
       {{- if .Values.elasticsearch.securityConfig.actionGroupsSecret }}
-      - name: action-group
+      - name: action-groups
         secret:
           secretName: {{ .Values.elasticsearch.securityConfig.actionGroupsSecret }}
       {{- end }}
